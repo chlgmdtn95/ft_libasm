@@ -4,7 +4,7 @@ OBJS = $(SRCS:.s=.o)
 ASM = nasm
 ASMFLAGS = -f elf64
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -no-pie
 
 all: $(NAME)
 
