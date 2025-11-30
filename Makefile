@@ -4,12 +4,13 @@ OBJS = $(SRCS:.s=.o)
 ASM = nasm
 ASMFLAGS = -f elf64
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -no-pie
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 %.o: %.s
 	$(ASM) $(ASMFLAGS) $< -o $@
@@ -18,11 +19,11 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) test_libasm
+	rm -f $(NAME) test_libasm main.o
 
 re: fclean all
 
 test: $(NAME)
-	$(CC) $(CFLAGS) main.c $(OBJS) -o test_libasm
+	$(CC) $(CFLAGS) main.c $(NAME) -o test_libasm
 
 .PHONY: all clean fclean re test
